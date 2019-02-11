@@ -21,11 +21,17 @@ class UserController extends Controller
      */
     public function signup(Request $request)
     {
-        $request->validate([
+         $validator = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed'
         ]);
+
+        if($validator->fails()){
+            return Response::json([
+                'errors' => $validator->errors()
+            ],404);
+        }
 
         $user = new User([
             'name' => $request->name,
