@@ -27,12 +27,6 @@ class UserController extends Controller
             'password' => 'required|string|confirmed'
         ]);
 
-        if($validator->fails()){
-            return Response::json([
-                'errors' => $validator->errors()
-            ],404);
-        }
-
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
